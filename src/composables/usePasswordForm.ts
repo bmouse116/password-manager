@@ -1,69 +1,41 @@
-// usePasswordForm.ts
-import { nextTick, reactive, ref, watch } from 'vue';
-import { v4 as uuidv4 } from 'uuid';
+import { ref, computed, watch } from 'vue';
 import type { FormInstance, FormRules } from 'element-plus';
+import { v4 as uuidv4 } from 'uuid';
 import { useAccounts } from '../store/useAccountStore';
 import { useModalStore } from '../store/useModalStore';
+import { useFormStore } from '../store/useFormStore';
 import { useNotify } from './useNotification';
 import { getCurrentDate } from '../utils/date';
 
 export function usePasswordForm() {
   const modalStore = useModalStore();
   const accountsStore = useAccounts();
+  const formStore = useFormStore();
   const notify = useNotify();
 
   const formRef = ref<FormInstance | null>(null);
-  
-  const getInitialState = () => ({
-    name: '',
-    login: '',
-    password: '',
-    tags: [] as string[],
-    comment: '',
-    url: '',
-    isFavorite: false,
-  });
 
-  const form = reactive(getInitialState());
-
-  const rules = reactive<FormRules>({
+  const rules: FormRules = {
     name: [{ required: true, message: 'Пожалуйста, введите название', trigger: 'blur' }],
     login: [{ required: true, message: 'Пожалуйста, введите логин', trigger: 'blur' }],
     password: [
       { required: true, message: 'Пожалуйста, введите пароль', trigger: 'blur' },
       { min: 6, message: 'Пароль должен содержать не менее 6 символов', trigger: 'blur' },
     ],
-  });
-
-  const resetForm = () => {
-    Object.assign(form, getInitialState());
-    nextTick(() => {
-      formRef.value?.clearValidate();
-    });
   };
-
-  const fillFormForEdit = (id: string) => {
-    const accountToEdit = accountsStore.getAccountById(id);
-    if (accountToEdit) {
-      form.name = accountToEdit.name;
-      form.login = accountToEdit.login;
-      form.password = accountToEdit.password;
-      form.tags = accountToEdit.tags?.map(t => t.text) ?? [];
-      form.comment = accountToEdit.comment || '';
-      form.url = accountToEdit.url || '';
-      form.isFavorite = accountToEdit.isFavorite || false;
-    }
-  };
-
+  
   watch(() => modalStore.isOpen, (isOpen) => {
     if (isOpen) {
-      if (modalStore.editingId) {
-        fillFormForEdit(modalStore.editingId);
+      if (modalStore.isEditMode && modalStore.editingId) {
+        const account = accountsStore.getAccountById(modalStore.editingId);
+        if (account) {
+          formStore.fillFormForEdit(account);
+        }
       } else {
-        resetForm();
+        formStore.resetForm();
       }
     }
-  });
+  }, { immediate: true });
 
   const submit = async () => {
     if (!formRef.value) return;
@@ -76,16 +48,16 @@ export function usePasswordForm() {
     }
 
     try {
-      if (modalStore.isEditMode && modalStore.editingId) {
+      if (modalStore.isEditMode && formStore.form.id) {
         accountsStore.update({
-          id: modalStore.editingId,
-          name: form.name,
-          login: form.login,
-          password: form.password,
-          tags: form.tags.map(t => ({ text: t })),
-          comment: form.comment,
-          url: form.url,
-          isFavorite: form.isFavorite,
+          id: formStore.form.id,
+          name: formStore.form.name,
+          login: formStore.form.login,
+          password: formStore.form.password,
+          tags: formStore.form.tags.map(t => ({ text: t })),
+          comment: formStore.form.comment,
+          url: formStore.form.url,
+          isFavorite: formStore.form.isFavorite,
           createdAt: '',
           updatedAt: '',
         });
@@ -94,15 +66,15 @@ export function usePasswordForm() {
         const now = getCurrentDate();
         accountsStore.add({
           id: uuidv4(),
-          name: form.name,
-          login: form.login,
-          password: form.password,
-          tags: form.tags.map(t => ({ text: t })),
-          comment: form.comment,
-          url: form.url,
+          name: formStore.form.name,
+          login: formStore.form.login,
+          password: formStore.form.password,
+          tags: formStore.form.tags.map(t => ({ text: t })),
+          comment: formStore.form.comment,
+          url: formStore.form.url,
           createdAt: now,
-          updatedAt: now,
-          isFavorite: form.isFavorite,
+          updatedAt: '',
+          isFavorite: formStore.form.isFavorite,
         });
         notify.success('Запись успешно добавлена');
       }
@@ -114,9 +86,9 @@ export function usePasswordForm() {
 
   return {
     formRef,
-    form,
+    form: formStore.form,
     rules,
-    isEditMode: modalStore.isEditMode,
+    isEditMode: computed(() => modalStore.isEditMode),
     submit,
   };
 }

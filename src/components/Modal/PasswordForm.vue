@@ -39,4 +39,5 @@ import ButtonActions from '../UI/ButtonActions.vue';
 import { usePasswordForm } from '../../composables/usePasswordForm';
 import type { FormInstance } from 'element-plus';
 const { formRef, form, rules, isEditMode, submit } = usePasswordForm();
+
 </script>

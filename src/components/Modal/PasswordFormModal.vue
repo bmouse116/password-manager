@@ -13,6 +13,7 @@
 import { useModalStore } from '../../store/useModalStore'
 import PasswordForm from './PasswordForm.vue'
 const modal = useModalStore()
+
 defineProps({
   isOpen: Boolean,
 })

@@ -3,7 +3,7 @@
     <template #header>
       <div class="card-header">
         <span>{{ account.name }}</span>
-        <el-button 
+        <el-button
         :type="account.isFavorite ? 'warning' : 'default'" 
         :icon="account.isFavorite ? StarFilled : Star" 
         circle 
@@ -16,9 +16,9 @@
       <span class="password-text">
         {{ isPasswordVisible ? account.password : '••••••••••' }}
       </span>
-      <el-button type="text" size="small" @click="togglePasswordVisibility">
+      <ButtonActions type="text" size="small" @click="togglePasswordVisibility">
         {{ isPasswordVisible ? 'Скрыть' : 'Показать' }}
-      </el-button>
+      </ButtonActions>
     </div>
     <div class="text item" v-if="account.url">
       <strong>URL:</strong>
@@ -39,10 +39,11 @@
       <div class="footer-actions">
         <ButtonActions size="small" @click="clipboardPassword(account.password)">Скопировать пароль</ButtonActions>
         <ButtonActions size="small" @click="editAccount(account.id)">Редактировать</ButtonActions>
-        <ButtonActions size="small" @click="removeAccount(account.id)">Удалить</ButtonActions>
+        <ButtonActions size="small" @click="modal.confirmOpen()">Удалить</ButtonActions>
       </div>
     </template>
   </el-card>
+  <ConfirmDelete :isConfirmOpen="modal.isConfirmOpen" @close="modal.confirmClose()" @delete="removeAccount(account.id)"/>
 </template>
 
 <script setup lang="ts">
@@ -54,6 +55,7 @@ import { ref } from 'vue';
 import { useAccounts } from '../../store/useAccountStore';
 import { useNotify } from '../../composables/useNotification';
 import { useModalStore } from '../../store/useModalStore';
+import ConfirmDelete from '../Modal/ConfirmDelete.vue';
 const store = useAccounts()
 const notify = useNotify()
 const modal = useModalStore()
@@ -94,6 +96,7 @@ const removeAccount = (id: string) => {
 }
 
 const editAccount = (id: string) => {
+
   modal.open(id)
 }
 

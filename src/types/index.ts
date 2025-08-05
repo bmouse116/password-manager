@@ -14,3 +14,12 @@ export interface PasswordEntry {
   createdAt: string;
   updatedAt: string;
 }
+
+
+export const SortTypes = {
+  NONE: '',
+  NEW: 'new',
+  FAVORITE: 'favorite'
+} as const;
+
+export type SortTypes = typeof SortTypes[keyof typeof SortTypes]
