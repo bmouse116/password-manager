@@ -18,6 +18,7 @@
       size="small"
       :placeholder="placeholder"
       @input="handleInput"
+      style="width: 300px;"
     />
   </div>
 </template>

@@ -13,8 +13,9 @@
     <el-form-item label="Логин" prop="login">
       <FormField v-model="form.login" placeholder="Введите логин" />
     </el-form-item>
-    <el-form-item label="Пароль" prop="password">
-      <FormField v-model="form.password" type="password" placeholder="Надежный пароль" />
+    <el-form-item label="Пароль" prop="password" >
+      <FormField v-model="form.password" type="password" placeholder="Надежный пароль" style="padding-right: 10px; padding-bottom: 10px;"/>
+      <ButtonActions size="small" @click="generate">Сгенерировать</ButtonActions>
     </el-form-item>
     <el-form-item label="Метки">
       <TagInput v-model="form.tags" placeholder="метка1; метка2;" />
@@ -36,8 +37,16 @@
 import FormField from '../UI/FormField.vue';
 import TagInput from '../UI/TagInput.vue';
 import ButtonActions from '../UI/ButtonActions.vue';
-import { usePasswordForm } from '../../composables/usePasswordForm';
+import { usePasswordForm } from '../../../shared/composables/usePasswordForm';
 import type { FormInstance } from 'element-plus';
+import { generatedPassword } from '../../../shared/composables/useGeneratedPassword';
 const { formRef, form, rules, isEditMode, submit } = usePasswordForm();
 
+
+const generate = () => {
+  form.password = generatedPassword({})
+}
 </script>
+<style scoped lang="scss">
+
+</style>

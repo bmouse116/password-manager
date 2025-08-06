@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import { computed, watch } from 'vue';
-import { useAccounts } from '../../store/useAccountStore';
-import { usePagination } from '../../store/usePaginationStore';
-import PasswordCard from '../UI/PasswordCard.vue';
+import PasswordCard from './PasswordCard.vue';
+import { useAccounts } from '../../../shared/store/useAccountStore';
+import { usePagination } from '../../../shared/store/usePaginationStore';
 
 
 const store = useAccounts()
@@ -29,7 +29,6 @@ const paginationEntries = computed(() =>
 )
 
 const totalItems = computed(() => {
-  // Просто возвращаем результат вызова
   return store.filteredEntries.length;
 });
 
@@ -44,16 +43,9 @@ watch(() => store.filteredEntries, () => {
 </script>
 
 <style scoped lang="scss">
-.el-row {
-  margin-bottom: 20px;
-}
-
-.el-row:last-child {
-  margin-bottom: 0;
-}
-
 .el-col {
   border-radius: 4px;
+  margin-bottom: 20px;
 }
 
 .grid-content {

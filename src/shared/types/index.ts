@@ -19,7 +19,8 @@ export interface PasswordEntry {
 export const SortTypes = {
   NONE: '',
   NEW: 'new',
-  FAVORITE: 'favorite'
+  FAVORITE: 'favorite',
+  OLD: 'old'
 } as const;
 
 export type SortTypes = typeof SortTypes[keyof typeof SortTypes]

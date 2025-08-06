@@ -29,6 +29,10 @@ export function filterEntries(entries: PasswordEntry[], criteria: FilterCriteria
             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         })
     }
-    
+    if(sort === SortTypes.OLD) {
+        result = result.slice().sort((a, b) => {
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime() 
+        })
+    }
     return result
 }

@@ -26,10 +26,10 @@ import FormField from '../UI/FormField.vue'
 import FilterSelect from '../UI/FilterSelect.vue'
 import ButtonActions from '../UI/ButtonActions.vue'
 import PasswordFormModal from '../Modal/PasswordFormModal.vue'
-import { useModalStore } from '../../store/useModalStore'
-import { useAccounts } from '../../store/useAccountStore'
-import { useTheme } from '../../composables/useTheme'
-import { SortTypes } from '../../types'
+import { useModalStore } from '../../../shared/store/useModalStore'
+import { useAccounts } from '../../../shared/store/useAccountStore'
+import { useTheme } from '../../../shared/composables/useTheme'
+import { SortTypes } from '../../../shared/types'
 import { Sunny, Moon } from '@element-plus/icons-vue'
 const store = useAccounts()
 const modal = useModalStore()
@@ -55,6 +55,7 @@ const tagOptions = computed(() => {
 const sortOptions = [
   { label: 'Без фильтра', value: SortTypes.NONE },
   { label: 'Новые', value: SortTypes.NEW },
+  { label: 'Старые', value: SortTypes.OLD },
   { label: 'Избранные', value: SortTypes.FAVORITE },
 ]
 </script>

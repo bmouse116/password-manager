@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import PasswordList from '../components/Containers/PasswordList.vue';
 import ListHeader from '../components/Containers/ListHeader.vue'
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuthStore } from '../../shared/store/useAuthStore';
 import LoginScreen from '../components/Containers/LoginScreen.vue';
 const authStore = useAuthStore()
 </script>

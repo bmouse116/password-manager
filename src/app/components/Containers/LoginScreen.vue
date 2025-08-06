@@ -8,6 +8,7 @@
       placeholder="Мастер-пароль"
       :error="error"
       @keyup.enter="handleLogin"
+      
     />
     <ButtonActions
       type="primary"
@@ -21,8 +22,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useAuthStore } from '../../store/useAuthStore';
-import { useAccounts } from '../../store/useAccountStore';
+import { useAuthStore } from '../../../shared/store/useAuthStore';
+import { useAccounts } from '../../../shared/store/useAccountStore';
 
 import FormField from '../UI/FormField.vue';
 import ButtonActions from '../UI/ButtonActions.vue';
@@ -31,7 +32,6 @@ const masterPassword = ref('');
 const error = ref('');
 const authStore = useAuthStore();
 const accountsStore = useAccounts();
-
 const handleLogin = () => {
   if (!masterPassword.value) {
     error.value = 'Пароль не может быть пустым.';
@@ -42,8 +42,7 @@ const handleLogin = () => {
 
   setTimeout(() => {
     authStore.login(masterPassword.value);
-    accountsStore.load(); 
-
+    accountsStore.load();
     if (!authStore.isAuthenticated) {
         error.value = 'Неверный мастер-пароль. Попробуйте еще раз.';
     }

@@ -6,6 +6,8 @@
       :model-value="modelValue"
       @update:modelValue="$emit('update:modelValue', $event)"
       :placeholder="placeholder"
+      :show-password="type === 'password'"
+      style="width: 300px;"
     />
     <el-input
       v-else
@@ -14,6 +16,7 @@
       :model-value="modelValue"
       @update:modelValue="$emit('update:modelValue', $event)"
       :placeholder="placeholder"
+      style="width: 300px;"
     />
   </el-form-item>
 </template>

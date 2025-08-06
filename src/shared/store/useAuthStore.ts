@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { hashMasterPassword } from '../services/cryptoService';
-
 export const useAuthStore = defineStore('auth', () => {
     const encryptionKey = ref<string | null>(null);
-
     const isAuthenticated = computed(() => !!encryptionKey.value);
 
     function login(masterPassword: string) {

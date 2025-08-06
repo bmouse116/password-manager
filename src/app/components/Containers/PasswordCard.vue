@@ -1,5 +1,5 @@
 <template>
-  <el-card style="max-width: 480px">
+  <el-card style="max-width: 480px; height: 330px;">
     <template #header>
       <div class="card-header">
         <span>{{ account.name }}</span>
@@ -48,13 +48,13 @@
 
 <script setup lang="ts">
 import { Star, StarFilled } from '@element-plus/icons-vue';
-import { formatDate } from '../../utils/formatDate';
-import ButtonActions from './ButtonActions.vue';
-import { useClipboard } from '../../composables/useClipboard';
+import { formatDate } from '../../../shared/utils/formatDate';
+import ButtonActions from '../UI/ButtonActions.vue';
+import { useClipboard } from '../../../shared/composables/useClipboard';
 import { ref } from 'vue';
-import { useAccounts } from '../../store/useAccountStore';
-import { useNotify } from '../../composables/useNotification';
-import { useModalStore } from '../../store/useModalStore';
+import { useAccounts } from '../../../shared/store/useAccountStore';
+import { useNotify } from '../../../shared/composables/useNotification';
+import { useModalStore } from '../../../shared/store/useModalStore';
 import ConfirmDelete from '../Modal/ConfirmDelete.vue';
 const store = useAccounts()
 const notify = useNotify()
@@ -131,14 +131,16 @@ const toggleFavorite = () => {
   font-family: monospace;
   user-select: text;
 }
-
+::v-deep(.el-card__body) {
+  height: 204px;
+}
 .footer-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: start;
   gap: 10px;
-
+  height: 100%;
   .el-button {
     margin-left: 0px;
   }

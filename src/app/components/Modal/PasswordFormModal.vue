@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModalStore } from '../../store/useModalStore'
+import { useModalStore } from '../../../shared/store/useModalStore'
 import PasswordForm from './PasswordForm.vue'
 const modal = useModalStore()
 

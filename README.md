@@ -1,5 +1,39 @@
-# Vue 3 + TypeScript + Vite
+# Менеджер паролей
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Описание проекта
+Веб-приложение для безопасного хранения и управления паролями с акцентом на клиентскую безопасность. Все данные шифруются в браузере с помощью AES-256 по мастер-паролю и хранятся локально. Проект демонстрирует владение современной экосистемой Vue, продуманную архитектуру с разделением логики (Composables, Services, Pinia, Utils)
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Стек технологий
+
+- **Vue.js 3 (Composition API)** — основной фреймворк для интерфейса  
+- **Pinia** — менеджер состояния  
+- **Vue Router** — маршрутизация  
+- **Vite** — сборщик и дев-сервер  
+- **TypeScript** — типизация  
+- **Element Plus** — UI-библиотека  
+- **CryptoJS** — криптография  
+- **LocalStorage** — хранение данных на стороне клиента
+
+## Уровни реализации по модулям
+Проект структурирован по следующим уровням
+
+- **Services/** - Безопасность и криптография
+- **Composables/** - Реактивная логика и хуки
+- **Store/** - Централизование хранилище и управление состояниями
+- **Utils/** - Утилиты и вспомогательные функции
+- **Components** - Пользовательский интерфейс
+
+## Установка проекта
+
+### Клонирование репозитория
+```sh
+git clone "адрес репозитория"
+```
+### Установка зависимостей
+```sh
+npm install
+```
+### Запуск в режиме разработки
+```sh
+npm run dev
+```
